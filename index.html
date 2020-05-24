@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""/>
+
+    <style>
+    #map_img {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    </style>
+
+  </head>
+  <body>
+    <div id="map_img"></div>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""></script>
+
+    <script>
+        var map = L.map('map_img', {
+            minZoom: 1,
+            maxZoom: 5,
+            center: [0, 0],
+            zoom: 1,
+            crs: L.CRS.Simple,
+            maxBoundsViscosity: 1.0
+        });
+        
+        var maxNativeZoom = 3
+        var width = 11564;
+        var height = 7441;
+        var url = 'image.png.map/0/{x}/{y}';
+
+        var bounds = new L.LatLngBounds(
+            map.unproject([0, height], maxNativeZoom), 
+            map.unproject([width, 0], maxNativeZoom)
+        );
+
+        L.tileLayer(url, {
+            tileSize: 512,
+            minNativeZoom: maxNativeZoom,
+            maxNativeZoom: maxNativeZoom
+          }).addTo(map);
+        map.setMaxBounds(bounds)
+    </script>
+  </body>
+</html>
